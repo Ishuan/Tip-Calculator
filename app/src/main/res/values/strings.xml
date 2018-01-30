@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">HW01</string>
+    <string name="Bill_Total">Bill Total</string>
+    <string name="Tip_Percent">Tip %</string>
+    <string name="Custom">Custom</string>
+    <string name="Tip">Tip</string>
+    <string name="Total">Total Tip</string>
+    <string name="Bill_Value">Enter Bill Value</string>
+    <string name="Ten_Percent">10%</string>
+    <string name="Fifteen_Percent">15%</string>
+    <string name="Eighteen_Percent">18%</string>
+    <string name="Custom_Tip">Custom</string>
+    <string name="Exit">Exit</string>
+</resources>
