@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tipNumeric;
     private RadioGroup radGrp;
     private RadioButton radBtn;
+    private RadioButton custBtn;
+    private TextView total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Setting up the tip icon in action bar
         ActionBar ab = getSupportActionBar();
-        //ab.setDisplayShowHomeEnabled(false);
-        ab.setDisplayShowTitleEnabled(true);
+        ab.setDisplayShowHomeEnabled(true);
+        //ab.setDisplayShowTitleEnabled(true);
         ab.setIcon(R.drawable.tips);
 
         setTitle("Tip Calculator");
@@ -44,11 +46,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         radGrp = findViewById(R.id.radioGroup);
         int val = radGrp.getCheckedRadioButtonId();
         radBtn = findViewById(val);
+        custBtn = findViewById(R.id.radioButton3);
 
         sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 progressView.setText(i + "%");
+                custBtn.setChecked(true);
             }
 
             @Override
@@ -77,17 +81,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String radBtnVal = radBtn.getText().toString();
-                if (radBtnVal.equalsIgnoreCase("Custom")) {
-                    Log.d("Demo", "Ishan");
-                } else if(enterAmount.getText().toString().length()!=0){
+                if(enterAmount.getText().toString().length()!=0){
                     String rad_val[] = radBtnVal.split("%");
                     String tipPercent = rad_val[0];
                     tipNumeric  = findViewById(R.id.textView14);
+                    tipNumeric.setText(tipPercent);
+                    total = findViewById(R.id.textView15);
                     float calTip = (((Float.parseFloat(tipPercent))*Float.parseFloat(enterAmount.getText().toString())))/100+Float.parseFloat(enterAmount.getText().toString());
-                    tipNumeric.setText(Float.toString(calTip)+"");
-
-
-                }
+                    total.setText(Float.toString(calTip));
+                    }
             }
 
             @Override
@@ -95,6 +97,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (enterAmount.getText().toString().length() == 0) {
                     enterAmount.setError("Enter Bill Total");
+                    double def_tip = 0.00;
+                    double def_total = 0.00;
+                    tipNumeric.setText(Double.toString(def_tip));
+                    total.setText(Double.toString(def_total));
+
                 }
             }
         });

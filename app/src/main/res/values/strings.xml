@@ -11,4 +11,8 @@
     <string name="Eighteen_Percent">18%</string>
     <string name="Custom_Tip">Custom</string>
     <string name="Exit">Exit</string>
+    <string name="Hint">Enter Bill Value</string>
+    <string name="Tip_Default">0.00</string>
+    <string name="Total_Default">0.00</string>
+    <string name="Seekbar_Default">25%</string>
 </resources>
