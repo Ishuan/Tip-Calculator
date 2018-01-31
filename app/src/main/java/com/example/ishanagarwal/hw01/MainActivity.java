@@ -23,30 +23,108 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tipNumeric;
     private RadioGroup radGrp;
     private RadioButton radBtn;
+    private RadioButton tenBtn;
+    private RadioButton fifteenBtn;
+    private RadioButton eighteenBtn;
     private RadioButton custBtn;
     private TextView total;
+    private String tenPer;
+    private String fifteenPer;
+    private String eighteenPer;
+    private String tipPercent;
+    private String[] percentage={};
+    private String amt;
+    private float progBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //Setting up the tip icon in action bar
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowHomeEnabled(true);
-        //ab.setDisplayShowTitleEnabled(true);
-        ab.setIcon(R.drawable.tips);
+        ab.setIcon(R.mipmap.ic_tips);
 
-        setTitle("Tip Calculator");
+        ab.setTitle("Tip Calculator");
 
-        //Setting the progress of the seekbar
         final SeekBar sBar = (SeekBar) findViewById(R.id.seekBar);
         final TextView progressView = (TextView) findViewById(R.id.textView16);
         radGrp = findViewById(R.id.radioGroup);
         int val = radGrp.getCheckedRadioButtonId();
         radBtn = findViewById(val);
+        String s=radBtn.getText().toString();
+        percentage = s.split("%");
+        tipPercent = percentage[0];
         custBtn = findViewById(R.id.radioButton3);
+
+
+        tenBtn = findViewById(R.id.radioButton);
+        fifteenBtn = findViewById(R.id.radioButton4);
+        eighteenBtn = findViewById(R.id.radioButton2);
+
+        tenBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tenPer = tenBtn.getText().toString();
+                percentage = tenPer.split("%");
+                tipPercent = percentage[0];
+                Log.d("name", tipPercent);
+                amt = enterAmount.getText().toString();
+                if (enterAmount.getText().toString().length() != 0) {
+                    tipNumeric = findViewById(R.id.textView14);
+                    tipNumeric.setText(tipPercent);
+                    total = findViewById(R.id.textView15);
+                    if (tipPercent != null) {
+                        float calTip = (((Float.parseFloat(tipPercent)) *
+                                Float.parseFloat(enterAmount.getText().toString()))) / 100 +
+                                Float.parseFloat(enterAmount.getText().toString());
+                        total.setText(Float.toString(calTip));
+                    }
+                }
+            }
+        });
+
+        fifteenBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fifteenPer = fifteenBtn.getText().toString();
+                percentage = fifteenPer.split("%");
+                tipPercent = percentage[0];
+                Log.d("name",tipPercent);
+                if(enterAmount.getText().toString().length()!=0) {
+                    tipNumeric = findViewById(R.id.textView14);
+                    tipNumeric.setText(tipPercent);
+                    total = findViewById(R.id.textView15);
+                    if (tipPercent != null) {
+                        float calTip = (((Float.parseFloat(tipPercent)) *
+                                Float.parseFloat(enterAmount.getText().toString()))) / 100 +
+                                Float.parseFloat(enterAmount.getText().toString());
+                        total.setText(Float.toString(calTip));
+                    }}
+            }
+        });
+
+        eighteenBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 eighteenPer = eighteenBtn.getText().toString();
+                percentage = eighteenPer.split("%");
+                tipPercent = percentage[0];
+                Log.d("name",tipPercent);
+                if(enterAmount.getText().toString().length()!=0) {
+                    tipNumeric = findViewById(R.id.textView14);
+                    tipNumeric.setText(tipPercent);
+                    total = findViewById(R.id.textView15);
+                    if (tipPercent != null) {
+                        float calTip = (((Float.parseFloat(tipPercent)) *
+                                Float.parseFloat(enterAmount.getText().toString()))) / 100 +
+                                Float.parseFloat(enterAmount.getText().toString());
+                        total.setText(Float.toString(calTip));
+                    }
+                }
+            }
+        });
 
         sBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -62,16 +140,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                progBar = seekBar.getProgress();
+                if(enterAmount.getText().toString().length()!=0) {
+                    tipNumeric = findViewById(R.id.textView14);
+                    tipNumeric.setText(Float.toString(progBar));
+                    total = findViewById(R.id.textView15);
+                    if (Float.toString(progBar) != null) {
+                        float calTip = ((progBar * Float.parseFloat(enterAmount.getText().toString()
+                        ))) / 100 + Float.parseFloat(enterAmount.getText().toString());
+                        total.setText(Float.toString(calTip));
+                    }
+                }
 
             }
         });
+
+        custBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String str = progressView.getText().toString();
+                percentage = str.split("%");
+                tipPercent = percentage[0];
+                if (enterAmount.getText().toString().length() != 0) {
+                    tipNumeric = findViewById(R.id.textView14);
+                    tipNumeric.setText(str);
+                    total = findViewById(R.id.textView15);
+                    if (tipPercent != null) {
+                        float calTip = ((Float.parseFloat(tipPercent) *
+                                Float.parseFloat(enterAmount.getText().toString()))) / 100 +
+                                Float.parseFloat(enterAmount.getText().toString());
+                        total.setText(Float.toString(calTip));
+                    }
+                }
+            }
+        });
+
 
         exitBtn = findViewById(R.id.button2);
         exitBtn.setOnClickListener(this);
 
         //Setting error on amount field
         enterAmount = findViewById(R.id.editText2);
-        //final String str = enterAmount.getText().toString();
         enterAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -80,17 +189,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String radBtnVal = radBtn.getText().toString();
-                if(enterAmount.getText().toString().length()!=0){
-                    String rad_val[] = radBtnVal.split("%");
-                    String tipPercent = rad_val[0];
-                    tipNumeric  = findViewById(R.id.textView14);
+
+
+                if(enterAmount.getText().toString().length()!=0) {
+
+                    tipNumeric = findViewById(R.id.textView14);
                     tipNumeric.setText(tipPercent);
                     total = findViewById(R.id.textView15);
-                    float calTip = (((Float.parseFloat(tipPercent))*Float.parseFloat(enterAmount.getText().toString())))/100+Float.parseFloat(enterAmount.getText().toString());
-                    total.setText(Float.toString(calTip));
+                    if (tipPercent != null) {
+                        float calTip = (((Float.parseFloat(tipPercent)) *
+                                Float.parseFloat(enterAmount.getText().toString()))) / 100 +
+                                Float.parseFloat(enterAmount.getText().toString());
+                        total.setText(Float.toString(calTip));
                     }
-            }
+                }
+                }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -106,8 +219,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-
-
 
     @Override
     public void onClick(View view) {
