@@ -1,3 +1,7 @@
+/*Homework-02
+Ishan Agarwal
+MainActivity.java*/
+
 package com.example.ishanagarwal.hw01;
 
 import android.support.v7.app.ActionBar;
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String[] percentage={};
     private String amt;
     private float progBar;
+    private SeekBar seek;
 
 
     @Override
@@ -58,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tipPercent = percentage[0];
         custBtn = findViewById(R.id.radioButton3);
 
-
+    seek=findViewById(R.id.seekBar);
         tenBtn = findViewById(R.id.radioButton);
         fifteenBtn = findViewById(R.id.radioButton4);
         eighteenBtn = findViewById(R.id.radioButton2);
@@ -131,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 progressView.setText(i + "%");
                 custBtn.setChecked(true);
+                progBar = seekBar.getProgress();
+                tipNumeric.setText(Float.toString(progBar));
             }
 
             @Override
@@ -141,9 +148,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 progBar = seekBar.getProgress();
+                tipNumeric.setText(Float.toString(progBar));
                 if(enterAmount.getText().toString().length()!=0) {
                     tipNumeric = findViewById(R.id.textView14);
-                    tipNumeric.setText(Float.toString(progBar));
+
                     total = findViewById(R.id.textView15);
                     if (Float.toString(progBar) != null) {
                         float calTip = ((progBar * Float.parseFloat(enterAmount.getText().toString()
@@ -163,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tipPercent = percentage[0];
                 if (enterAmount.getText().toString().length() != 0) {
                     tipNumeric = findViewById(R.id.textView14);
-                    tipNumeric.setText(str);
+                    tipNumeric.setText(tipPercent);
                     total = findViewById(R.id.textView15);
                     if (tipPercent != null) {
                         float calTip = ((Float.parseFloat(tipPercent) *
@@ -191,20 +199,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
 
-                if(enterAmount.getText().toString().length()!=0) {
+                if (enterAmount.getText().toString().length() != 0) {
+                    if (radGrp.getCheckedRadioButtonId() == custBtn.getId()) {
 
-                    tipNumeric = findViewById(R.id.textView14);
-                    tipNumeric.setText(tipPercent);
-                    total = findViewById(R.id.textView15);
-                    if (tipPercent != null) {
-                        float calTip = (((Float.parseFloat(tipPercent)) *
+                            float tip = seek.getProgress();
+
+                        float calTip = ((tip *
                                 Float.parseFloat(enterAmount.getText().toString()))) / 100 +
                                 Float.parseFloat(enterAmount.getText().toString());
+                        tipNumeric.setText(Float.toString(tip));
                         total.setText(Float.toString(calTip));
+
+                    }if (radGrp.getCheckedRadioButtonId() != custBtn.getId()){
+                        tipNumeric = findViewById(R.id.textView14);
+                        tipNumeric.setText(tipPercent);
+                        total = findViewById(R.id.textView15);
+                        if (tipPercent != null) {
+                            float calTip = (((Float.parseFloat(tipPercent)) *
+                                    Float.parseFloat(enterAmount.getText().toString()))) / 100 +
+                                    Float.parseFloat(enterAmount.getText().toString());
+                            total.setText(Float.toString(calTip));
+                        }
                     }
                 }
-                }
-
+            }
             @Override
             public void afterTextChanged(Editable editable) {
 

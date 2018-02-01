@@ -1,10 +1,17 @@
+<!--
+Homework-02
+Ishan Agarwal
+Strings.xml
+-->
+
+
 <resources>
     <string name="app_name">HW01</string>
     <string name="Bill_Total">Bill Total</string>
     <string name="Tip_Percent">Tip %</string>
     <string name="Custom">Custom</string>
     <string name="Tip">Tip</string>
-    <string name="Total">Total Tip</string>
+    <string name="Total">Total</string>
     <string name="Bill_Value">Enter Bill Value</string>
     <string name="Ten_Percent">10%</string>
     <string name="Fifteen_Percent">15%</string>
